@@ -228,7 +228,7 @@ public class Player : MonoBehaviour
         // Set the new position
         transform.position = position;
 
-        EnableAfterDelay(1f);
+        StartCoroutine(EnableAfterDelay(1f));
     }
     private IEnumerator EnableAfterDelay(float delay)
     {

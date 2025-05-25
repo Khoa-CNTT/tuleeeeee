@@ -13,7 +13,6 @@ using tuleeeeee.Data;
 using tuleeeeee.Misc;
 using tuleeeeee.Utilities;
 using tuleeeeee.StaticEvent;
-using static UnityEditor.Experimental.GraphView.GraphView;
 using UnityEngine.InputSystem;
 
 namespace tuleeeeee.Managers
