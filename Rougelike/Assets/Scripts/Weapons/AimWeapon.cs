@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using tuleeeeee.Enums;
+using tuleeeeee.Misc;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
 
 
@@ -13,14 +15,21 @@ public class AimWeapon : MonoBehaviour
     [Tooltip("Populate with the Transform from the child WeaponeRotationPoint gameobject")]
     #endregion
     [SerializeField] private Transform weaponRotationPointTransform;
+    [SerializeField] private Transform cursor;
 
     private AimWeaponEvent aimWeaponEvent;
     private Player player;
+    private PlayerInput playerInput;
 
     private void Awake()
     {
         aimWeaponEvent = GetComponent<AimWeaponEvent>();
         player = GetComponent<Player>();
+        playerInput = GetComponent<PlayerInput>();
+        if (playerInput != null && playerInput.currentControlScheme != Settings.gamePad)
+        {
+            cursor.gameObject.SetActive(false);
+        }
     }
 
     private void OnEnable()

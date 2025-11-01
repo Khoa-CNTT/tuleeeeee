@@ -89,6 +89,10 @@ namespace tuleeeeee.Misc
         public const float contactDamageCollisionResetDelay = 0.5f;
         #endregion
 
+        #region CONTROLSCHEME
+        public const string gamePad = "Gamepad";
+        #endregion
+
         #region UI PARAMETERS
         public const float uiAmmoIconSpacing = 4f;
         public const float uiHeartSpacing = 16f;

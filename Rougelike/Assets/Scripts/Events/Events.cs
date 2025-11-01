@@ -27,6 +27,16 @@ namespace tuleeeeee.Events
     public class OpenMenuEvent : UnityEvent<bool> { }
 
     /// <summary>
+    ///     An event when open menu input
+    /// </summary>
+    public class OpenMapEvent : UnityEvent<bool> { }
+
+    /// <summary>
+    ///     An event when open menu input
+    /// </summary>
+    public class SubmitEvent : UnityEvent<bool> { }
+
+    /// <summary>
     ///     An event representing a look input (where the character must look) in the direction of its parameter
     /// </summary>
     public class LookEvent : UnityEvent<Vector2> { }
@@ -40,6 +50,11 @@ namespace tuleeeeee.Events
     ///  SelectWeapon By 1-9
     /// </summary>
     public class SelectWeaponEvent : UnityEvent<int> { }
+
+    /// <summary>
+    /// Switch Weapon
+    /// </summary>
+    public class SwitchWeapon : UnityEvent<bool> { }
 
     /// <summary>
     /// Fast Switch Weapon Q

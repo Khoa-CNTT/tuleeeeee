@@ -51,6 +51,7 @@ public class MainMenuUI : MonoBehaviour
 
         if (isChosenCharacter)
         {
+            coopButton.SetActive(true);
             SceneManager.LoadScene("CharacterSelectorScene", LoadSceneMode.Additive);
         }
     }
@@ -59,6 +60,7 @@ public class MainMenuUI : MonoBehaviour
         SetMainMenuButtonsActive(false);
 
         coopButton.SetActive(false);
+
 
         if (isChosenCharacter)
         {

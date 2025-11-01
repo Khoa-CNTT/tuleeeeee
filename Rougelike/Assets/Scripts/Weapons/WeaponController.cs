@@ -45,6 +45,7 @@ public class WeaponController : MonoBehaviour
         inputHandler.LookEvent.AddListener(AimWeapon);
         inputHandler.AttackEvent.AddListener(WeaponShooted);
         inputHandler.ScrollEvent.AddListener(ScrollSelectedWeapon);
+        inputHandler.SwitchWeaponEvent.AddListener(SwitchWeapon);
         inputHandler.SelectWeaponEvent.AddListener(SelectWeapon);
         inputHandler.FastSwitchWeaponEvent.AddListener(FastSwitchWeapon);
         inputHandler.ReloadEvent.AddListener(ReloadWeapon);
@@ -54,6 +55,7 @@ public class WeaponController : MonoBehaviour
         inputHandler.LookEvent.RemoveListener(AimWeapon);
         inputHandler.AttackEvent.RemoveListener(WeaponShooted);
         inputHandler.ScrollEvent.RemoveListener(ScrollSelectedWeapon);
+        inputHandler.SwitchWeaponEvent.RemoveListener(SwitchWeapon);
         inputHandler.SelectWeaponEvent.RemoveListener(SelectWeapon);
         inputHandler.FastSwitchWeaponEvent.RemoveListener(FastSwitchWeapon);
         inputHandler.ReloadEvent.RemoveListener(ReloadWeapon);
@@ -107,9 +109,12 @@ public class WeaponController : MonoBehaviour
         weaponSlotIndex = newWeaponSlotIndex;
         SetWeaponByIndex(weaponSlotIndex);
     }
+    public void SwitchWeapon(bool isClicked)
+    {
+        SwitchBetweenTwoWeapon();
+    }
     public void FastSwitchWeapon(bool isClicked)
     {
-        fastSwitchWeapon = isClicked;
         FastSwitchWeapon();
     }
     private void CalculateAimParameters()
@@ -141,13 +146,9 @@ public class WeaponController : MonoBehaviour
     private void SwitchWeaponInput(Vector2 newScrollValue)
     {
         if (newScrollValue.y < 0f)
-        {
             PreviousWeapon();
-        }
-        if (newScrollValue.y > 0f)
-        {
+        else if (newScrollValue.y > 0f)
             NextWeapon();
-        }
     }
 
 
@@ -181,43 +182,52 @@ public class WeaponController : MonoBehaviour
 
     private void PreviousWeapon()
     {
-        currentWeaponIndex--;
-        if (currentWeaponIndex < 1)
+        if (currentWeaponIndex > 1)
         {
-            currentWeaponIndex = player.weaponList.Count;
+            currentWeaponIndex--;
         }
-        SetWeaponByIndex(currentWeaponIndex);
-
+        else
+        {
+            reverse = false; // Reached the start, change direction
+            currentWeaponIndex++; // Immediately reverse
+        }
     }
 
     private void NextWeapon()
     {
-        currentWeaponIndex++;
-        if (currentWeaponIndex > player.weaponList.Count)
+        if (currentWeaponIndex < player.weaponList.Count)
         {
-            currentWeaponIndex = 1;
+            currentWeaponIndex++;
         }
-        SetWeaponByIndex(currentWeaponIndex);
+        else
+        {
+            reverse = true; // Reached the end, reverse direction
+            currentWeaponIndex--; // Immediately reverse
+        }
     }
 
     private void SwitchBetweenTwoWeapon()
     {
+        if (player.weaponList.Count <= 1) return; // No switching needed
         if (!reverse)
         {
             NextWeapon();
+
         }
         else
         {
             PreviousWeapon();
         }
-        reverse = !reverse;
+        SetWeaponByIndex(currentWeaponIndex);
     }
 
     private void FastSwitchWeapon()
     {
-        SetWeaponByIndex(previousWeaponIndex);
+        if (previousWeaponIndex != currentWeaponIndex && previousWeaponIndex > 0)
+        {
+            SetWeaponByIndex(previousWeaponIndex);
+        }
     }
-
     private void SetCurrentWeaponToFirstInTheList()
     {
         List<Weapon> tempWeaponList = new List<Weapon>();

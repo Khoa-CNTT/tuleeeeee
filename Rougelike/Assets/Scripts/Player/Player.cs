@@ -67,12 +67,14 @@ public class Player : MonoBehaviour
         HealthEvent.OnHealthChanged += HealthEvent_OnHealthChanged;
         InputHandler.UseItemEvent.AddListener(UsedItem);
         InputHandler.OpenMenuEvent.AddListener(OpenPauseMenu);
+        InputHandler.OpenMapEvent.AddListener(OpenMap);
     }
     private void OnDisable()
     {
         HealthEvent.OnHealthChanged -= HealthEvent_OnHealthChanged;
         InputHandler.UseItemEvent.RemoveListener(UsedItem);
         InputHandler.OpenMenuEvent.RemoveListener(OpenPauseMenu);
+        InputHandler.OpenMapEvent.RemoveListener(OpenMap);
     }
     private void Awake()
     {
@@ -106,9 +108,11 @@ public class Player : MonoBehaviour
     }
     public void OpenPauseMenu(bool isOpening)
     {
-
         GameManager.Instance.PauseGameMenu();
-
+    }
+    public void OpenMap(bool isOpening)
+    {
+        GameManager.Instance.DungeonOverviewMap();
     }
     public void UsedItem(bool isUsedItem)
     {

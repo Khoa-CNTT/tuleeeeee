@@ -150,6 +150,7 @@ namespace tuleeeeee.Managers
         {
             HandleGameState();
             speedRunTimer += Time.deltaTime;
+
         }
 
         private void HandleGameState()
@@ -163,59 +164,28 @@ namespace tuleeeeee.Managers
                     break;
                 case GameState.playingLevel:
                     miniMap.SetActive(true);
-                    /*  if (GetPlayer().IsMenuOpen())
-                      {
-                          PauseGameMenu();
-                      }*/
-                    if (Input.GetKeyDown(KeyCode.Tab))
-                    {
-                        DisplayDungeonOverviewMap();
-                    }
                     break;
                 case GameState.engagingEnemies:
                     miniMap.SetActive(false);
-                    /*  if (GetPlayer().IsMenuOpen())
-                      {
-                          PauseGameMenu();
-                      }*/
                     break;
-
                 case GameState.dungeonOverviewMap:
-                    if (Input.GetKeyUp(KeyCode.Tab))
-                    {
-                        DungeonMap.Instance.ClearDungeonOverViewMap();
-                    }
                     break;
-
                 case GameState.bossStage:
-                    /*  if (GetPlayer().IsMenuOpen())
-                      {
-                          PauseGameMenu();
-                      }*/
-                    if (Input.GetKeyDown(KeyCode.Tab))
-                    {
-                        DisplayDungeonOverviewMap();
-                    }
+                    miniMap.SetActive(true);
                     break;
-
                 case GameState.engagingBoss:
-                    /*   if (GetPlayer().IsMenuOpen())
-                       {
-                           PauseGameMenu();
-                       }*/
+                    miniMap.SetActive(false);
                     break;
-
                 case GameState.levelCompleted:
+                    miniMap.SetActive(true);
                     StartCoroutine(LevelCompleted());
                     break;
-
                 case GameState.gameWon:
                     if (previousGameState != GameState.gameWon)
                     {
                         StartCoroutine(GameWon());
                     }
                     break;
-
                 case GameState.gameLost:
                     if (previousGameState != GameState.gameLost)
                     {
@@ -225,12 +195,7 @@ namespace tuleeeeee.Managers
                 case GameState.restartGame:
                     RestartGame();
                     break;
-
                 case GameState.gamePaused:
-                    /*        if (GetPlayer().IsMenuOpen())
-                            {
-                                PauseGameMenu();
-                            }*/
                     break;
             }
         }
@@ -318,11 +283,20 @@ namespace tuleeeeee.Managers
             }
         }
 
-        private void DisplayDungeonOverviewMap()
+        public void DungeonOverviewMap()
         {
             if (isFading) return;
 
-            DungeonMap.Instance.DisplayDungeonOverViewMap();
+            if (gameState != GameState.playingLevel && gameState != GameState.bossStage && gameState != GameState.dungeonOverviewMap) return;
+
+            if (gameState != GameState.dungeonOverviewMap)
+            {
+                DungeonMap.Instance.DisplayDungeonOverViewMap();
+            }
+            else
+            {
+                DungeonMap.Instance.ClearDungeonOverViewMap();
+            }
         }
 
         private void PlayDungeonLevel(int dungeonLeveListIndex)
@@ -472,7 +446,6 @@ namespace tuleeeeee.Managers
 
             gameState = GameState.restartGame;
         }
-
         private IEnumerator GameLost()
         {
             previousGameState = GameState.gameLost;
@@ -506,22 +479,18 @@ namespace tuleeeeee.Managers
 
             gameState = GameState.restartGame;
         }
-
         private void RestartGame()
         {
             SceneManager.LoadScene("MainMenuScene");
         }
-
         public Room GetCurrentRoom()
         {
             return currentRoom;
         }
-
         public Player GetPlayer()
         {
             return player;
         }
-
         public Player GetSecondPlayer()
         {
             return secondPlayer;
@@ -532,17 +501,14 @@ namespace tuleeeeee.Managers
             if (player == secondPlayer) return this.player;
             return null;
         }
-      
         public Sprite GetPlayerMiniMapIcon()
         {
             return playerDetails.playerMiniMapIcon;
         }
-
         public DungeonLevelSO GetCurrentDungeonLevel()
         {
             return dungeonLevelList[currentDungeonLevelListIndex];
         }
-
         public CinemachineVirtualCamera GetVirtualCamera()
         {
             return cVirtualCamera;

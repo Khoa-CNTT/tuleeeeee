@@ -8,7 +8,7 @@ using UnityEngine;
 [DisallowMultipleComponent]
 public class SoundEffectManager : SingletonMonoBehaviour<SoundEffectManager>
 {
-    public int soundsVolume = 10;
+    public int soundsVolume = 5;
 
     private void Start()
     {

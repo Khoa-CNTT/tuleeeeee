@@ -16,7 +16,12 @@ namespace tuleeeeee.MyInput
         public bool RollInput { get; private set; }
         public bool RollInputStop { get; private set; }
         public bool ShotInput { get; private set; }
-        public bool IsOpening { get; private set; }
+        public bool IsOpeningMenu { get; private set; }
+        public bool IsOpeningMap { get; private set; }
+        public bool IsSubmit { get; private set; }
+
+
+        private bool isSwitchWeaponClicked = false;
 
         private float rollInputStartTime;
         [SerializeField]
@@ -137,6 +142,18 @@ namespace tuleeeeee.MyInput
         /// 
         /// </summary>
         /// <param name="context"></param>
+        public void OnSwitchWeapon(InputAction.CallbackContext context)
+        {
+            if (context.started)
+            {
+                isSwitchWeaponClicked = !isSwitchWeaponClicked;
+                SwitchWeaponEvent.Invoke(isSwitchWeaponClicked);
+            }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="context"></param>
         public void OnFastSwitchWeapon(InputAction.CallbackContext context)
         {
             bool isClick = false;
@@ -151,6 +168,7 @@ namespace tuleeeeee.MyInput
 
             FastSwitchWeaponEvent.Invoke(isClick);
         }
+
 
         /// <summary>
         ///  Reload
@@ -196,10 +214,38 @@ namespace tuleeeeee.MyInput
         {
             if (context.started)
             {
-                IsOpening = !IsOpening;
+                IsOpeningMenu = !IsOpeningMenu;
+                OpenMenuEvent.Invoke(IsOpeningMenu);
             }
-            OpenMenuEvent.Invoke(IsOpening);
+        }
 
+        /// <summary>
+        ///  Reload
+        /// </summary>
+        /// <param name="context"></param>
+        public void OnOpenMap(InputAction.CallbackContext context)
+        {
+            if (context.started)
+            {
+                IsOpeningMap = !IsOpeningMap;
+                OpenMapEvent.Invoke(IsOpeningMap);
+            }
+        }
+
+        /// <summary>
+        ///  Reload
+        /// </summary>
+        /// <param name="context"></param>
+        public void OnSubmit(InputAction.CallbackContext context)
+        {
+            if (context.started)
+            {
+                IsSubmit = true;
+            }
+            else if(context.canceled)
+            {
+                IsSubmit = false;
+            }
         }
         public void UseRollInput() => RollInput = false;
         private void CheckRollInputHoldTime()
@@ -214,19 +260,25 @@ namespace tuleeeeee.MyInput
         private readonly LookEvent onLookEvent = new LookEvent();
         private readonly ScrollEvent onScrollEvent = new ScrollEvent();
         private readonly SelectWeaponEvent onSelectWeaponEvent = new SelectWeaponEvent();
+        private readonly SwitchWeapon onSwitchWeaponEvent = new SwitchWeapon();
         private readonly FastSwitchWeaponEvent onFastSwitchWeaponEvent = new FastSwitchWeaponEvent();
         private readonly AttackEvent onAttackEvent = new AttackEvent();
         private readonly ReloadEvent onReloadEvent = new ReloadEvent();
         private readonly UseItemEvent onUseItemEvent = new UseItemEvent();
         private readonly OpenMenuEvent onOpenMenuEvent = new OpenMenuEvent();
+        private readonly OpenMapEvent onOpenMapEvent = new OpenMapEvent();
+        private readonly SubmitEvent onSubmitEvent = new SubmitEvent();
         public UnityEvent<Vector2> LookEvent => onLookEvent;
         public UnityEvent<Vector2> ScrollEvent => onScrollEvent;
         public UnityEvent<int> SelectWeaponEvent => onSelectWeaponEvent;
+        public UnityEvent<bool> SwitchWeaponEvent => onSwitchWeaponEvent;
         public UnityEvent<bool> FastSwitchWeaponEvent => onFastSwitchWeaponEvent;
         public UnityEvent<bool> AttackEvent => onAttackEvent;
         public UnityEvent<bool> ReloadEvent => onReloadEvent;
         public UnityEvent<bool> UseItemEvent => onUseItemEvent;
         public UnityEvent<bool> OpenMenuEvent => onOpenMenuEvent;
+        public UnityEvent<bool> OpenMapEvent => onOpenMapEvent;
+        public UnityEvent<bool> SubmitEvent => onSubmitEvent;
         #endregion
 
     }

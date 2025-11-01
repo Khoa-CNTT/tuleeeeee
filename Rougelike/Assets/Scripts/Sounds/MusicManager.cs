@@ -10,7 +10,7 @@ public class MusicManager : SingletonMonoBehaviour<MusicManager>
     private AudioClip currentAudioClip = null;
     private Coroutine fadeOutMusicCoroutine;
     private Coroutine fadeInMusicCoroutine;
-    public int musicVolume = 10;
+    public int musicVolume = 5;
 
     protected override void Awake(){
         base.Awake();
