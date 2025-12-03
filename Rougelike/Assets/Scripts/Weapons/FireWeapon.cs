@@ -10,6 +10,7 @@ public class FireWeapon : MonoBehaviour
     private FireWeaponEvent fireWeaponEvent;
     private WeaponFiredEvent weaponFiredEvent;
     private ReloadWeaponEvent reloadWeaponEvent;
+    public GameObject melon;
 
     private void Awake()
     {
@@ -36,6 +37,8 @@ public class FireWeapon : MonoBehaviour
     private void FireWeaponEvent_OnFireWeapon(FireWeaponEvent fireWeaponEvent, FireWeaponEventArgs fireWeaponEventArgs)
     {
         WeaponFire(fireWeaponEventArgs);
+        //GameObject instantiatedMelon = Instantiate(melon, activeWeapon.GetShootPosition(), Quaternion.identity);
+        //instantiatedMelon.GetComponent<FakeHeightObject>().Initialize(activeWeapon.GetShootTransform().right * Random.Range(5, 10), Random.Range(5, 15));
     }
 
     private void WeaponFire(FireWeaponEventArgs fireWeaponEventArgs)
@@ -48,6 +51,7 @@ public class FireWeapon : MonoBehaviour
             {
                 FireAmmo(fireWeaponEventArgs.aimAngle, fireWeaponEventArgs.weaponAimAngle,
                     fireWeaponEventArgs.weaponAimDirectionVector, fireWeaponEventArgs.fireTime);
+
 
                 ResetCoolDownTimer();
 

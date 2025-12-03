@@ -38,14 +38,14 @@ public class ActiveWeapon : MonoBehaviour
         currentWeapon = weapon;
         weaponSpriteRenderer.sprite = currentWeapon.weaponDetails.weaponSprite;
 
-    /*    if (weaponPolygonCollider2D != null && weaponSpriteRenderer.sprite != null)
-        {
-            List<Vector2> spritePhysicsShapePointsList = new List<Vector2>();
-            weaponSpriteRenderer.sprite.GetPhysicsShape(0, spritePhysicsShapePointsList);
+        /*    if (weaponPolygonCollider2D != null && weaponSpriteRenderer.sprite != null)
+            {
+                List<Vector2> spritePhysicsShapePointsList = new List<Vector2>();
+                weaponSpriteRenderer.sprite.GetPhysicsShape(0, spritePhysicsShapePointsList);
 
-            weaponPolygonCollider2D.points = spritePhysicsShapePointsList.ToArray();
-        }
-*/
+                weaponPolygonCollider2D.points = spritePhysicsShapePointsList.ToArray();
+            }
+    */
         weaponShootPositionTransform.localPosition = currentWeapon.weaponDetails.weaponShootPosition;
     }
 
@@ -62,6 +62,11 @@ public class ActiveWeapon : MonoBehaviour
     public Vector3 GetShootPosition()
     {
         return weaponShootPositionTransform.position;
+    }
+
+    public Transform GetShootTransform()
+    {
+        return weaponShootPositionTransform;
     }
 
     public Vector3 GetShootEffectPosition()

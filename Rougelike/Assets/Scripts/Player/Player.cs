@@ -78,7 +78,7 @@ public class Player : MonoBehaviour
     }
     private void Awake()
     {
-        #region Compoments
+        #region Components
         Core = GetComponentInChildren<Core>();
         InputHandler = GetComponent<PlayerInputHandler>();
         SpriteRendererArray = GetComponentsInChildren<SpriteRenderer>();
